@@ -6,7 +6,7 @@ import WrongBtnAlert from '../utils/alerts/WrongButtonAlert';
 import { useDispatch } from 'react-redux';
 import { setScore } from '../features/scoreSlice';
 import { useNavigation } from '@react-navigation/native';
-import SoundPlayer from 'react-native-sound-player';
+import sounds from '../utils/sounds/sounds';
 export default function Board({ isGameDone, setIsGameDone }) {
 
   const dispatch = useDispatch();
@@ -44,6 +44,7 @@ export default function Board({ isGameDone, setIsGameDone }) {
     await delays(1000);
     for (let i=0; i<play.colors.length; i++) {
         setColorFlash(play.colors[i]);
+        sounds(play.colors[i]);
         await delays(1000);
         setColorFlash("");
         await delays(1000);
@@ -63,6 +64,7 @@ export default function Board({ isGameDone, setIsGameDone }) {
   };
 
   const handleCardClick = async (color) => {
+    sounds(color);
     //  Display off, and it is user turn
     if (!play.isDisplay && play.isUserPlay) {
         

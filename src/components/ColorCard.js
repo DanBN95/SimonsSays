@@ -33,6 +33,7 @@ export default function ColorCard({color, onClick, flash}) {
 
     return (
     <TouchableOpacity 
+    disabled={flash}
     onPress={onClick}
     style = {[{
         backgroundColor: curColor,
