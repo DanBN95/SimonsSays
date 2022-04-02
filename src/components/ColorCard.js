@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import flashColors from '../utils/colors/flashColors';
 
-export default function ColorCard({color, onClick, flash}) {
+export default function ColorCard({color, onClick, flash, touchDisabled}) {
 
     const [curColor, setCurColor] = useState(color);
 
@@ -33,7 +33,7 @@ export default function ColorCard({color, onClick, flash}) {
 
     return (
     <TouchableOpacity 
-    disabled={flash}
+    disabled={touchDisabled}
     onPress={onClick}
     style = {[{
         backgroundColor: curColor,

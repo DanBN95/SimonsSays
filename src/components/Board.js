@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, Button } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import ColorCard from './ColorCard'
 import delays from '../utils/helper/delay';
-import WrongBtnAlert from '../utils/alerts/WrongButtonAlert';
 import { useDispatch } from 'react-redux';
 import { setScore } from '../features/scoreSlice';
 import { useNavigation } from '@react-navigation/native';
@@ -10,9 +9,9 @@ import sounds from '../utils/sounds/sounds';
 export default function Board({ isGameDone, setIsGameDone }) {
 
   const dispatch = useDispatch();
-  const naviagation = useNavigation();
 
   const [isOn, setIsOn] = useState(false);
+  const [touchDisabled, setTouchDisabled] = useState(true);
   
   const colors = ["green", "yellow", "red", "blue"];
 
@@ -59,6 +58,7 @@ export default function Board({ isGameDone, setIsGameDone }) {
                 isUserPlay: true, 
                 userColor: copyPlayColors.reverse()
             });
+            setTouchDisabled(false);
         }
     }
   };
@@ -125,8 +125,14 @@ export default function Board({ isGameDone, setIsGameDone }) {
     <View>
     <View style = {styles.container}>
         {colors.map((color, index) => {
-            return <ColorCard key={index} onClick={() => handleCardClick(color)} color={color} flash = {colorFlash === color}></ColorCard>
-        })}
+            return (
+            <ColorCard 
+            key={index} 
+            onClick={() => handleCardClick(color)} 
+            color={color} 
+            flash = {colorFlash === color}
+            touchDisabled = {touchDisabled} />
+        )})}
 
         {isOn && !play.isDisplay && !play.isUserPlay && play.score !== 0 && (
             <View style = {styles.gameOverDisplay}>
